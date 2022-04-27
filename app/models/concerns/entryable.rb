@@ -1,7 +1,7 @@
 module Entryable
   extend ActiveSupport::Concern
 
-  TYPES = %w[Post].freeze
+  TYPES = %w[Post Repost].freeze
 
   included do
     has_one :entry, as: :entryable, touch: true, dependent: :destroy
