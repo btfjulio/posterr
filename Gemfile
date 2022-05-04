@@ -36,9 +36,12 @@ gem 'bootsnap', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem "rack-cors"
 
+gem 'active_model_serializers'
 # Rswag extends rspec-rails "request specs" with a Swagger-based DSL for describing and testing API operations.
 gem 'rswag-api'
 gem 'rswag-ui'
+# scope engine for pagination
+gem 'kaminari'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -49,6 +52,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rswag-specs'
   gem 'shoulda-matchers'
+  gem 'bullet'
 end
 
 group :development do

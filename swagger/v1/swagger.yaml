@@ -1,0 +1,61 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/users/{user_id}/profile":
+    get:
+      summary: Retrieve User Profile Info
+      tags:
+      - User Profile
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: current_user_id
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      description: |2
+                Example of Request
+
+                http://localhost:3000/api/v1/user/1/profile?current_user_id=1
+                http://localhost:3000/api/v1/user/1/profile?current_user_id=1&page=1
+      responses:
+        '200':
+          description: user profile found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  date_joined:
+                    type: string
+                  posts_count:
+                    type: integer
+                  entries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        created_at:
+                          type: string
+                        entry_type:
+                          type: string
+                          description: Type of entry Post/Repost/Quote
+                        entry_info:
+                          type: object
+                          description: Info from entry object
+        '404':
+          description: user profile not found

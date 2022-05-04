@@ -108,9 +108,18 @@ Style/RedundantBegin:
 Lint/MissingCopEnableDirective:
   Enabled: false
 
+Lint/MissingSuper:
+  Enabled: false
+
 Style/FormatStringToken:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
   Enabled: false
 
 Naming/VariableNumber:
   Enabled: false
 
+RSpec/EmptyExampleGroup:
+  Exclude:
+   - "spec/integration/**/*.rb"
