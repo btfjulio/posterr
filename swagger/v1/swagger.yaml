@@ -4,6 +4,134 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/entries/posts":
+    post:
+      summary: Create user Post
+      tags:
+      - Post
+      description: |2
+                Example of Request
+
+                http://localhost:3000/api/v1/entries/posts?current_user_id=1
+
+                {
+                  "params": {
+                    "user_id": 1,
+                    "post": { "content": 'Lorem Ipsum' }
+                  }
+                }
+      parameters:
+      - name: current_user_id
+        in: query
+      responses:
+        '201':
+          description: creates new post
+        '422':
+          description: " when entry is not valid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: User ID
+                  required: true
+                post:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+                      required: true
+  "/api/v1/entries/quotes":
+    post:
+      summary: Create user Quote
+      tags:
+      - Quote
+      description: |2
+                Example of Request
+
+                http://localhost:3000/api/v1/entries/quotes?current_user_id=1
+
+                {
+                  "params": {
+                    "user_id": 1,
+                    "quote": {
+                      "post_id": '1',
+                      "content": 'Lorem Ipsum'
+                    }
+                  }
+                }
+      parameters:
+      - name: current_user_id
+        in: query
+      responses:
+        '201':
+          description: creates new quote
+        '422':
+          description: when quote is not valid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: User ID
+                  required: true
+                quote:
+                  type: object
+                  properties:
+                    post_id:
+                      type: integer
+                      description: ID from quoted Post
+                      required: true
+                    content:
+                      type: string
+                      required: true
+  "/api/v1/entries/reposts":
+    post:
+      summary: Create user Repost
+      tags:
+      - Repost
+      description: |2
+              Example of Request
+
+                http://localhost:3000/api/v1/entries/reposts?current_user_id=1
+
+                {
+                  "params": {
+                    "user_id": 1,
+                    "repost": { "post_id": '1' }
+                  }
+                }
+      parameters:
+      - name: current_user_id
+        in: query
+      responses:
+        '201':
+          description: creates new repost
+        '422':
+          description: when repost is not valid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: User ID
+                  required: true
+                repost:
+                  type: object
+                  properties:
+                    post_id:
+                      type: integer
+                      description: ID from reposted Post
+                      required: true
   "/api/v1/users/{user_id}/profile":
     get:
       summary: Retrieve User Profile Info
@@ -48,6 +176,8 @@ paths:
                       type: object
                       properties:
                         id:
+                          type: integer
+                        user_id:
                           type: integer
                         created_at:
                           type: string

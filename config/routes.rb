@@ -7,6 +7,10 @@ Rails.application.routes.draw do
       resources :users, only: [] do
         get :profile, to: 'users/profiles#show'
       end
+
+      namespace :entries do
+        resources :posts, :reposts, :quotes, only: [:create]
+      end
     end
   end
 end
