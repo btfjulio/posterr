@@ -6,8 +6,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [] do
         get :profile, to: 'users/profiles#show'
-        get :feed, to: 'users/feeds#index'
       end
+      get :feed, to: 'feeds#index'
 
       namespace :entries do
         resources :posts, :reposts, :quotes, only: [:create]

@@ -192,6 +192,57 @@ paths:
       responses:
         '204':
           description: destroyes follow relationship
+  "/api/v1/feed":
+    get:
+      summary: Lists user Home Page entries
+      tags:
+      - User Home Page Feed
+      parameters:
+      - name: current_user_id
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: only_following
+        in: query
+        required: false
+        schema:
+          type: boolean
+      description: |2
+                Example of Request
+
+                http://localhost:3000/api/v1/user/feed?current_user_id=1&page=1
+                http://localhost:3000/api/v1/user/feed?current_user_id=1&page=1&only_following=true
+      responses:
+        '200':
+          description: lists exclusively followings entries
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  entries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Entry ID
+                        created_at:
+                          type: string
+                        user_id:
+                          type: integer
+                        entry_type:
+                          type: string
+                          description: Type of entry Post/Repost/Quote
+                        entry_info:
+                          type: object
+                          description: Info from entry object
   "/api/v1/users/{user_id}/profile":
     get:
       summary: Retrieve User Profile Info

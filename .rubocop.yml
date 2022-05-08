@@ -123,3 +123,7 @@ Naming/VariableNumber:
 RSpec/EmptyExampleGroup:
   Exclude:
    - "spec/integration/**/*.rb"
+
+RSpec/MultipleMemoizedHelpers:
+  Exclude:
+   - "spec/integration/**/*.rb"
