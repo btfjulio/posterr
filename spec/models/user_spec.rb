@@ -18,4 +18,30 @@ RSpec.describe User, type: :model do
       it { is_expected.to be_invalid }
     end
   end
+
+  describe '.follow' do
+    subject(:follow) { first_user.follow(second_user) }
+
+    let(:first_user) { create(:user) }
+    let(:second_user) { create(:user) }
+
+    it 'creates follow relationships' do
+      expect { follow }.to change(first_user.followings, :count).by(1)
+        .and change(second_user.followers, :count).by(1)
+    end
+  end
+
+  describe '.unfollow' do
+    subject(:unfollow) { first_user.unfollow(second_user) }
+
+    let(:first_user) { create(:user) }
+    let(:second_user) { create(:user) }
+
+    before { first_user.follow(second_user) }
+
+    it 'destroys follow relationships' do
+      expect { unfollow }.to change(first_user.followings, :count).by(-1)
+        .and change(second_user.followers, :count).by(-1)
+    end
+  end
 end

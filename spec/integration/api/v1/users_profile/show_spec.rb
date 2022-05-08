@@ -22,10 +22,17 @@ RSpec.describe 'User', swagger_doc: 'v1/swagger.yaml', bullet: true do
       response '200', 'user profile found' do
         schema type:       :object,
                properties: {
-                 username:    { type: :string },
-                 date_joined: { type: :string },
-                 posts_count: { type: :integer },
-                 entries:     {
+                 username:         { type: :string },
+                 date_joined:      { type: :string },
+                 posts_count:      { type: :integer },
+                 followings_count: { type: :integer, description: 'Number of users following the profile owner' },
+                 followers_count:  { type: :integer, description: 'Number of users follower by the profile owner' },
+                 follow_id:        {
+                   type:         :integer,
+                   'x-nullable': true,
+                   description:  'Follow relationship ID if it exists'
+                 },
+                 entries:          {
                    type:  :array,
                    items: {
                      type: :object, properties: {
@@ -48,8 +55,10 @@ RSpec.describe 'User', swagger_doc: 'v1/swagger.yaml', bullet: true do
           create :repost, :with_user, user: profile_user, post: post, created_at: Date.parse('02/01/2022')
         end
         let(:quote) { create :quote, :with_user, user: profile_user, post: post, created_at: Date.parse('03/01/2022') }
+        let(:follow) { create :follow, following: profile_user, follower: current_user }
 
         before do
+          follow
           post
           repost
           quote
@@ -61,6 +70,9 @@ RSpec.describe 'User', swagger_doc: 'v1/swagger.yaml', bullet: true do
           expect(data['name']).to eq profile_user.name
           expect(data['date_joined']).to eq 'January 01, 2022'
           expect(data['posts_count']).to eq 3
+          expect(data['followings_count']).to eq 0
+          expect(data['followers_count']).to eq 1
+          expect(data['follow_id']).to be follow.id
 
           profile_entries = data['entries']
           expect(profile_entries.size).to eq 3

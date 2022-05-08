@@ -2,6 +2,7 @@ class User < ApplicationRecord
   ALPHANUMERIC_PATTERN = /\A[A-Za-z0-9]+\z/.freeze
   NAME_LENGTH_LIMIT = 14
 
+  include Followable
   has_many :entries, dependent: :nullify
 
   validates :name,

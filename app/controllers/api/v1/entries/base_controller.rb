@@ -13,7 +13,6 @@ module Api
         private
 
         def entry
-          # binding.pry
           @entry ||= Entry.new(user: current_user, entryable: entryable_params)
         end
 

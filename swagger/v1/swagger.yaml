@@ -132,6 +132,66 @@ paths:
                       type: integer
                       description: ID from reposted Post
                       required: true
+  "/api/v1/follows":
+    post:
+      summary: Create user Follow
+      tags:
+      - Follow
+      description: |2
+                Example of Request
+
+                http://localhost:3000/api/v1/follows?current_user_id=1
+
+                {
+                  "params": {
+                    "user_id": 1,
+                    "following_id": 2
+                  }
+                }
+      parameters:
+      - name: current_user_id
+        in: query
+      responses:
+        '201':
+          description: creates new follow relationship
+        '422':
+          description: invalid follow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: Followed User ID
+                  required: true
+  "/api/v1/follows/{id}":
+    delete:
+      summary: Destroy user Follow
+      tags:
+      - Unfollow
+      description: |2
+                Example of Request
+
+                http://localhost:3000/api/v1/follows/1?current_user_id=1
+
+                {
+                  "params": {
+                    "user_id": 1
+                  }
+                }
+      parameters:
+      - name: current_user_id
+        in: query
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: destroyes follow relationship
   "/api/v1/users/{user_id}/profile":
     get:
       summary: Retrieve User Profile Info
@@ -170,6 +230,16 @@ paths:
                     type: string
                   posts_count:
                     type: integer
+                  followings_count:
+                    type: integer
+                    description: Number of users following the profile owner
+                  followers_count:
+                    type: integer
+                    description: Number of users follower by the profile owner
+                  follow_id:
+                    type: integer
+                    x-nullable: true
+                    description: Follow relationship ID if it exists
                   entries:
                     type: array
                     items:
